@@ -25,3 +25,4 @@ echo ok; cd /ants/; echo -ne "\n\n\n\n\n\n\n\n";
 #git clone https://github.com/bobokrull/ants||apt install -yqq git 2>x && git clone https://github.com/bobokrull/ants
 ###########
 ## show loaded state
+chown $SUDO_USER:$SUDO_USER ../ants -R
