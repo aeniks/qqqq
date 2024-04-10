@@ -5,6 +5,7 @@
 ###########
 ## coolors - display available colors
 coolors() {
+#!/bin/bash
 for ((i=0; i<256; i++)) ;do
 echo -n '  '
 tput setab $i
@@ -134,3 +135,4 @@ if [ -z "$1" ]; then echo -e "\n\t $c2 Try$dim ["$re"yno question? command 1"$di
 echo -e "\n\n\t $re$c2 $1 $white$dim["$re$bold"Y$dim/"$re$bold"n$dim]$re $(tput sc)\n\n\n\n"; tput rc cuu 5; read -n1 yn; 
 if [ "$yn" == "${yn#[Nn]}" ]; then echo -en "\t $c2 OK"; pro $2; else echo "nope"; fi;  
 }
+
