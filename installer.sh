@@ -2,83 +2,77 @@
 ########### [ants.sh] - bash installer
 ###########
 ########### COLORS
-tput cup 0; tput ed; bold=$(tput bold) dim=$(tput dim) re=$(tput sgr0) cyan=$(tput setaf 6) pink=$(tput setaf 5 bold) blue=$(tput setab 5 bold) blink=$(tput blink) up1=$(tput cuu1) dddd=$(echo -e ""$pink"--------------------------------$re") c2=""$cyan"--"$re""; ants="$_"; ll=$(echo -e " \t "); alias "ee"='echo '; 
+tput cup 0; tput ed; bold=$(tput bold) dim=$(tput dim) re=$(tput sgr0) cyan=$(tput setaf 6) pink=$(tput setaf 5 bold) blue=$(tput setaf 4 bold) blink=$(tput blink) up1=$(tput cuu1) dddd=$(echo -e ""$pink"--------------------------------$re") c2=""$cyan"--"$re""; ants="$_"; ll=$(echo -e " \t "); alias "ee"='echo '; 
 ########### greeting - HELLO
 echo -e "\n\n\t\t $blink ¯\(ツ)/¯$re "; echo -e " \n\n $ll This script should be run as root... [ sudo -s ] \n\n"; read;
 ###########
 sudo sed -i 's/#$nrconf{restart} = '"'"'i'"'"';/$nrconf{restart} = '"'"'a'"'"';/g' /etc/needrestart/needrestart.conf 2>/dev/null;
 ########### pro - task loaading animation
+
+tput cup 0; tput ed; echo -e "\n\n\t\t$(tput blink) ¯\(ツ)/¯$(tput sgr0) ";
+alias "ee"='echo ';
+export bold=$(tput bold) dim=$(tput dim) so=$(tput smso) noso=$(tput rmso) rev=$(tput rev) re=$(tput sgr0) normal=$(tput sgr0) \
+redb=$(tput setab 1) greenb=$(tput setab 2) yellowb=$(tput setab 3) blueb=$(tput setab 4) purpleb=$(tput setab 5) cyanb=$(tput setab 6) \
+grayb=$(tput setab 7) red=$(tput setaf 1) green=$(tput setaf 2) yellow=$(tput setaf 3) blue=$(tput setaf 4) purple=$(tput setaf 5) \
+cyan=$(tput setaf 6) gray=$(tput setaf 7) white=$(tput setaf 7 bold) pink=$(tput setaf 5 bold) darkblue=$(tput setab 5 bold) blink=$(tput blink) \
+left2=$(tput cub 2) up1=$(tput cuu1) 
+export dddd=$(echo -e ""$pink"--------------------------------$re") c2=""$cyan"--"$re""; ants="$_"; ll=$(echo -e " \t "); 
+###########
+if [ $UID != 0 ]; then echo -e " \n\n $ll This script must be run as root... try command: [ sudo -s ] \n\n " 1>&2; 
+read -ep "$ll K" "k7"; echo ok; fi;
+sudo sed -i 's/#$nrconf{restart} = '"'"'i'"'"';/$nrconf{restart} = '"'"'a'"'"';/g' /etc/needrestart/needrestart.conf 2>/dev/null;
+# echo "%sudo ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/; 
+############################################################
+## pro - task loading animation ############################
+############################################################
+
 pro() {
-tf() { tput setaf $((RANDOM%16)); }
-
-tb() { tput setab $((RANDOM%16)); }
-
-c2="$cyan --$re"; tput civis;
-$1 $2 $3 $4 $pro &>/dev/null & disown; tput cuu 8; tput ed; tput cud 2; PROC_ID=$!; while kill -0 "$PROC_ID"&>/dev/null; 
-do for X in "[        ]" "[$(tf)=$re       ]" "[$(tf)==$re      ]" "[$(tf)===$re     ]" "[$(tf)====    $re]"  "[ $(tf)====   $re]" \
-"[  $(tf)====$re  ]" "[   $(tf)==== $re]" "[    $(tf)====$re]" "[     "$(tf)"===$re]" "[      "$(tf)"=="$re"]" "[       =]" "[        ]" "[        ]" "[        ]"; 
-do echo -e "  [$(tb)  $re]$c2 Executing $rev $1 $2$3$4$pro $re"$c2" $X"; tput cuu1; sleep 0.08; done; done;
-echo -e "\t\t\t\t\t\t [  "$green"DONE"$re"  ] \n\n\n\n\n"; tput cnorm;
+alias tf='tput setaf $((RANDOM%16));'; alias tb='tput setab $((RANDOM%16));'; c2=""$cyan"--"$re""; tput civis; tput sgr0; 
+$1 $2 $3 $4 &>./tmp & disown; tput cuu1; PROC_ID=$!; while kill -0 "$PROC_ID" &>/dev/null; 
+do for X in "[        ]" "[$(tf)=$re       ]" "[$(tf)=$(tf)=$re      ]" "[$(tf)=$(tf)=$(tf)=$re     ]" "[$(tf)=$(tf)=$(tf)=$(tf)=    $re]"  \
+"[ $(tf)=$(tf)=$(tf)=$(tf)=   $re]" "[  $(tf)=$(tf)=$(tf)=$(tf)=$re  ]" "[   $(tf)=$(tf)=$(tf)=$(tf)= $re]" "[    $(tf)=$(tf)=$(tf)=$(tf)=$re]" \
+"[     "$(tf)"=$(tf)=$(tf)=$re]" "[      "$(tf)"=$(tf)="$re"]" "[       $(tf)=]" "[        ]" "[        ]" "[        ]"; 
+do echo -e "    $dim[$(tb)  $re$dim]$re "$c2" Executing $rev $1 $2 $3 $4 $re $c2$c2$c2$c2$c2"; tput cuu1; tput sgr0; echo -e "\t\t\t\t\t $X"; tput cuu1; sleep 0.1; 
+tput sc; tput cup $((LINES-4)) 0; echo -e "\t$darkblue $(tail -n2 ./tmp|head -n1) $re"; echo -e "\t$yellow $(tail -n1 ./tmp) $re"; tput cuu 2; tput rc; 
+done; done; echo -e "\t\t\t\t\t"$dim" [$re  "$green"DONE"$re" $dim ]$re "; tput cnorm; rm ./tmp &>/dev/null;
 }
-########### YNO
+
+##########33
+
 yno() {
 if [ -z "$1" ]; then echo -e "\n\t $c2 Try$dim ["$re"yno question? command 1"$dim"]$re and use quotes...\n"; fi; 
 echo -e "\n\n\t $re$c2 $1 $white$dim["$re$bold"Y$dim/"$re$bold"n$dim]$re $(tput sc)\n\n\n\n"; tput rc cuu 5; read -n1 yn; 
 if [ "$yn" == "${yn#[Nn]}" ]; then echo -en "\t $c2 OK"; pro $2; else echo "nope"; fi;  
 }
 
+####
 
-#### Update apt ############
-############################
-prompt='Update apt?'; 
-############################
-tput indn 8; tput cuu 6; 
-echo -en "\t $re$c2 $prompt $white$dim["$re$bold"Y$dim/"$re$bold"n$dim]$re "; read -n1 yn; if [ "$yn" == "${yn#[Nn]}" ]; then echo -e "\t $c2 OK"; 
-pro sudo apt update; sleep 0.5; 
-else echo "nope"; fi;
-#### Upgrade apt ############
-############################
-prompt='Upgrade apt?'; 
-############################
-echo -en "\t $re$c2 $prompt $white$dim["$re$bold"Y$dim/"$re$bold"n$dim]$re "; read -n1 yn; if [ "$yn" == "${yn#[Nn]}" ]; then echo -e "\t $c2 OK"; 
-pro sudo apt update; pro sudo apt -y upgrade; pro sudo apt -y autoremove; sleep 0.5; 
-else echo "nope"; fi;
-#### DONE ####
-##
-##
-##
-echo -e "$SUDO_USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/ants 2>x;
 
-###########################################################################################
-## pro - done #############################################################################
-###########################################################################################
+clone_ants() {
+sudo rm /ants 2>//dev/null; cd /; 
+sudo git clone https://github.com/aeniks/ants||sudo apt install -yqq git 2>/dev/null && sudo git clone https://github.com/aeniks/ants;
+sudo chown $SUDO_USER:ants /ants -R; cd /ants; ls;
+}
+super_user() {
+echo -e "
+$susu ALL=(ALL) NOPASSWD:ALL
+%$susu ALL=(ALL) NOPASSWD:ALL
+" > admins.sh;
+sudo chown $SUDO_USER:$USER ./admins.sh; sudo chmod 775 ./admins.sh; sudo cp ./admins.sh /etc/sudoers.d/admins;
+}
 
-## Welcome to ... 		###################################################################
-echo -e "\t $dddd\n\t Welcome to$cyan 12ants$re bash-improver! \n\t $dddd"; ###############
-## Proceed ... 			###################################################################
-read -n1 -ep "$ll""$c2"" Do you wish to proceed? "$dim"["$re$bold"Y"$dim"/"$re$bold"n"$re$dim"] $re" "yn"; 
-if [ "$yn" != "${yn#[Nn]}" ]; then echo "$c2 nope";exit 0; else echo "$ll$c2 OK"; fi ; ####
-## Github folder... 	###################################################################
-read -ep "$ll$c2 Folder for$cyan$bold Github? $re" -i "$PWD/gh/" "gh"; export gh="$gh"; ####
-mkdir $gh -p -m 775; chown $SUDO_USER: $gh; cd $gh; mkdir ants -p -m 775; #################
-cd $gh/ants; echo;echo; #######################################################################
-pro='git stash'; pro; sleep 1; pro='git pull'; pro; sleep 1; cd ..; sleep 1; echo -ne " $re ";
-pro="git clone https://github.com/12ants/ants"; pro; cd ants; sleep 1; #############################
-chown $SUDO_USER: ../ants -R; read -n1 -ep "$ll""$c2"" Install Improvments? "$dim"["$re$bold"Y"$dim"/"$re$bold"n"$re$dim"] $re" "yn"; 
-if [ "$yn" != "${yn#[Nn]}" ]; then echo "$c2 nope"; return 2>/dev/null; else echo "$ll$c2 OK";
-cd ants; tput dim; sudo cp sh/aaaa.sh /etc/aaaa.sh -bv; sudo cp sh/bbbb.sh /etc/bbbb.sh -bv; sudo cp sh/cccc.sh /etc/cccc.sh -bv; 
-sudo cp sh/etc_profile.sh /etc/profile -bv; sudo cp sh/etc_bash.sh /etc/bash.bashrc -bv; sudo cp sh/ssss.sh /bin/ssss -bv;
-echo " $re "; sleep 1; pro='chmod 775 /bin/ssss'; pro; sleep 1; pro="chown "$SUDO_USER": /etc/*.sh"; pro; 
-pro='chmod 755 /etc/*.sh -v'; pro; sleep 1; fi;
-sleep 1; tput sgr0; 
-#######
-#######
-#######
-cd /$gh/ants/etc/;
-####### MENU
-#######
-#!/bin/bash
-# tput indn $((LINES-2)); 
+
+
+echo -ne "\n\n\n\n\n
+\t$cyan --$green -------$red -- $blue---------$re - $pink--$re
+\t    Welcome to Installer X    \n \t$pink --$cyan -------$green -- $re---------$red - $blue--$re  \n";
+##################################
+read -ep "admin: " -i "$SUDO_USER" "susu"; 
+yno "beckome su?" "super_user"
+yno "install ants?" "clone_ants"
+###########
+## show loaded state
+
 tput cup 2; tput ed; 
 #clear; unset *; 
 echo -e "\n\n
@@ -207,9 +201,16 @@ done
 for i in "${CHECKED[@],,}";
 do
 echo -e "\n\t $c2 Installing $i \n"; sleep 1;
-bash "$gh/ants/etc/"$i".sh"; echo -e "\n\t $c2 All done$c2 \n";
+bash "./installers/"$i".sh"; echo -e "\n\t $c2 All done$c2 \n";
 done
 echo -e "\t $c2 All done$c2\n\n";
 ########################################
 echo -e "\n\n\n\n    $ll $c2$blink Bash is now better! $re$c2 \n\n\n\n"; sleep 1;
-source ./menu.sh
+
+
+################# end
+
+echo -e "\n\n\n\n $green"; cd /ants/; echo -e "Enjoy the ants! \n\n"$re$dim"this be the files\n\n"$re"/ants/"|pr --indent=8 --omit-header;  echo -e "$blue\t------------ $re"; ls|pr --omit-header --indent=8; echo -ne "\n\n\n\n\n";
+qqqq 
+
+
