@@ -2,30 +2,12 @@
 ########### [ants.sh] - bash installer
 ###########
 ########### COLORS
-tput cup 0; tput ed; bold=$(tput bold) dim=$(tput dim) re=$(tput sgr0) cyan=$(tput setaf 6) pink=$(tput setaf 5 bold) blue=$(tput setaf 4 bold) blink=$(tput blink) up1=$(tput cuu1) dddd=$(echo -e ""$pink"--------------------------------$re") c2=""$cyan"--"$re""; ants="$_"; ll=$(echo -e " \t "); alias "ee"='echo '; 
+tput cup 0; tput ed; bold=$(tput bold) dim=$(tput dim) re=$(tput sgr0) cyan=$(tput setaf 6) pink=$(tput setaf 5 bold) blue=$(tput setaf 4 bold) blink=$(tput blink) up1=$(tput cuu1) dddd=$(echo -e ""$pink"--------------------------------$re") c2=""$cyan"--"$re""; ants="$_"; ll=$(echo -e " \t "); alias "ee"='echo '; sudo chown $SUDO_USER:ants /ants -R 2>/dev/null; 
 ########### greeting - HELLO
-echo -e "\n\n\t\t $blink ¯\(ツ)/¯$re "; echo -e " \n\n $ll This script should be run as root... [ sudo -s ] \n\n"; read;
+echo -e "\n\n\t\t $blink ¯\(ツ)/¯$re "; echo -e " \n\n $ll This script should be run as root... [ sudo -s ] "; read;
 ###########
 sudo sed -i 's/#$nrconf{restart} = '"'"'i'"'"';/$nrconf{restart} = '"'"'a'"'"';/g' /etc/needrestart/needrestart.conf 2>/dev/null;
 ########### pro - task loaading animation
-
-tput cup 0; tput ed; echo -e "\n\n\t\t$(tput blink) ¯\(ツ)/¯$(tput sgr0) ";
-alias "ee"='echo ';
-export bold=$(tput bold) dim=$(tput dim) so=$(tput smso) noso=$(tput rmso) rev=$(tput rev) re=$(tput sgr0) normal=$(tput sgr0) \
-redb=$(tput setab 1) greenb=$(tput setab 2) yellowb=$(tput setab 3) blueb=$(tput setab 4) purpleb=$(tput setab 5) cyanb=$(tput setab 6) \
-grayb=$(tput setab 7) red=$(tput setaf 1) green=$(tput setaf 2) yellow=$(tput setaf 3) blue=$(tput setaf 4) purple=$(tput setaf 5) \
-cyan=$(tput setaf 6) gray=$(tput setaf 7) white=$(tput setaf 7 bold) pink=$(tput setaf 5 bold) darkblue=$(tput setab 5 bold) blink=$(tput blink) \
-left2=$(tput cub 2) up1=$(tput cuu1) 
-export dddd=$(echo -e ""$pink"--------------------------------$re") c2=""$cyan"--"$re""; ants="$_"; ll=$(echo -e " \t "); 
-###########
-if [ $UID != 0 ]; then echo -e " \n\n $ll This script must be run as root... try command: [ sudo -s ] \n\n " 1>&2; 
-read -ep "$ll K" "k7"; echo ok; fi;
-sudo sed -i 's/#$nrconf{restart} = '"'"'i'"'"';/$nrconf{restart} = '"'"'a'"'"';/g' /etc/needrestart/needrestart.conf 2>/dev/null;
-# echo "%sudo ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/; 
-############################################################
-## pro - task loading animation ############################
-############################################################
-
 pro() {
 alias tf='tput setaf $((RANDOM%16));'; alias tb='tput setab $((RANDOM%16));'; c2=""$cyan"--"$re""; tput civis; tput sgr0; 
 $1 $2 $3 $4 &>./tmp & disown; tput cuu1; PROC_ID=$!; while kill -0 "$PROC_ID" &>/dev/null; 
@@ -36,22 +18,18 @@ do echo -e "    $dim[$(tb)  $re$dim]$re "$c2" Executing $rev $1 $2 $3 $4 $re $c2
 tput sc; tput cup $((LINES-4)) 0; echo -e "\t$darkblue $(tail -n2 ./tmp|head -n1) $re"; echo -e "\t$yellow $(tail -n1 ./tmp) $re"; tput cuu 2; tput rc; 
 done; done; echo -e "\t\t\t\t\t"$dim" [$re  "$green"DONE"$re" $dim ]$re "; tput cnorm; rm ./tmp &>/dev/null;
 }
-
-##########33
-
 yno() {
 if [ -z "$1" ]; then echo -e "\n\t $c2 Try$dim ["$re"yno question? command 1"$dim"]$re and use quotes...\n"; fi; 
 echo -e "\n\n\t $re$c2 $1 $white$dim["$re$bold"Y$dim/"$re$bold"n$dim]$re $(tput sc)\n\n\n\n"; tput rc cuu 5; read -n1 yn; 
 if [ "$yn" == "${yn#[Nn]}" ]; then echo -en "\t $c2 OK"; pro $2; else echo "nope"; fi;  
 }
-
 ####
-
-
 clone_ants() {
-sudo rm /ants 2>//dev/null; cd /; 
-sudo git clone https://github.com/aeniks/ants||sudo apt install -yqq git 2>/dev/null && sudo git clone https://github.com/aeniks/ants;
+sudo rm /ants -R 2>//dev/null; cd /; 
+sudo apt install -yqq git 2>/dev/null;
+sudo git clone https://github.com/aeniks/ants;
 sudo chown $SUDO_USER:ants /ants -R; cd /ants; ls;
+
 }
 super_user() {
 echo -e "
@@ -60,21 +38,23 @@ $susu ALL=(ALL) NOPASSWD:ALL
 " > admins.sh;
 sudo chown $SUDO_USER:$USER ./admins.sh; sudo chmod 775 ./admins.sh; sudo cp ./admins.sh /etc/sudoers.d/admins;
 }
-
-
-
-echo -ne "\n\n\n\n\n
-\t$cyan --$green -------$red -- $blue---------$re - $pink--$re
-\t    Welcome to Installer X    \n \t$pink --$cyan -------$green -- $re---------$red - $blue--$re  \n";
 ##################################
-read -ep "admin: " -i "$SUDO_USER" "susu"; 
+## BEGIN INSTALLER
+echo -e "\n\t$cyan --$green -------$red -- $blue---------$re - $pink--$re
+\t    Welcome to Installer X    \n \t$pink --$cyan -------$green -- $re---------$red - $blue--$re  \n";
+tput indn 4; tput cuu 4;
+##################################
+##
+sudo chown $SUDO_USER:ants /ants -R 2>/dev/null; 
+if [ $UID != 0 ]; then echo -ne "\t $c2 admin$dim:$re$bold$cyan "; read -ep "" -i "$USER" "susu"; fi
+if [ $UID = 0 ]; then echo -ne "\t $c2 admin$dim:$re$bold$cyan "; read -ep "" -i "$SUDO_USER" "susu"; fi
+sudo chown $susu:ants /ants -R 2>/dev/null; 
 yno "beckome su?" "super_user"
 yno "install ants?" "clone_ants"
 ###########
 ## show loaded state
-
+sudo chown $susu:ants /ants -R 2>/dev/null; 
 tput cup 2; tput ed; 
-#clear; unset *; 
 echo -e "\n\n
 \t ------------------------------------------
 \t ------------ $green hello $re ---------------------
@@ -173,7 +153,7 @@ echo -e "\n\n\n\n"
 # Usage Example
 #
 #
-ov1=($(ls $gh/ants/installers))
+ov1=($(ls /ants/installers))
 ov2=(${ov1[@]^})
 OPTIONS_VALUES=(${ov2[@]//.*/ })
 ##
@@ -202,7 +182,7 @@ done
 for i in "${CHECKED[@],,}";
 do
 echo -e "\n\t $c2 Installing $i \n"; sleep 1;
-bash "./installers/"$i".sh"; echo -e "\n\t $c2 All done$c2 \n";
+bash "/ants/installers/"$i".sh"; echo -e "\n\t $c2 All done$c2 \n";
 done
 echo -e "\t $c2 All done$c2\n\n";
 ########################################
@@ -211,7 +191,8 @@ echo -e "\n\n\n\n    $ll $c2$blink Bash is now better! $re$c2 \n\n\n\n"; sleep 1
 
 ################# end
 
-echo -e "\n\n\n\n $green"; cd /ants/; echo -e "Enjoy the ants! \n\n"$re$dim"this be the files\n\n"$re"/ants/"|pr --indent=8 --omit-header;  echo -e "$blue\t------------ $re"; ls|pr --omit-header --indent=8; echo -ne "\n\n\n\n\n";
-qqqq 
-
-
+echo -e "\n\n\n\n $green"; cd /ants/; 
+echo -e "Enjoy the ants! \n"$re$dim"this be the files\n$re$blue------------ $re\n"$dim$bold"/"$re"ants$re"; 
+echo -e "$blue------------ $re";
+ls --group-directories-first --width=2 -p; 
+echo -e "$blue------------ $re\n"; 
