@@ -1,7 +1,13 @@
 #!/bin/bash
+########### [ants.sh] - bash installer
 ###########
-echo -ne "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n
-\t -- Welcome to Installer X ";
+########### COLORS
+tput cup 0; tput ed; bold=$(tput bold) dim=$(tput dim) re=$(tput sgr0) cyan=$(tput setaf 6) pink=$(tput setaf 5 bold) blue=$(tput setab 5 bold) blink=$(tput blink) up1=$(tput cuu1) dddd=$(echo -e ""$pink"--------------------------------$re") c2=""$cyan"--"$re""; ants="$_"; ll=$(echo -e " \t "); alias "ee"='echo '; 
+########### greeting - HELLO
+echo -e "\n\n\t\t $blink ¯\(ツ)/¯$re "; echo -e " \n\n $ll This script should be run as root... [ sudo -s ] \n\n"; read;
+###########
+sudo sed -i 's/#$nrconf{restart} = '"'"'i'"'"';/$nrconf{restart} = '"'"'a'"'"';/g' /etc/needrestart/needrestart.conf 2>/dev/null;
+########### pro - task loaading animation
 pro() {
 alias tf='tput setaf $((RANDOM%16));'
 alias tb='tput setab $((RANDOM%16));'
@@ -19,10 +25,14 @@ if [ "$yn" == "${yn#[Nn]}" ]; then echo -en "\t $c2 OK"; pro $2; else echo "nope
 }
 ##
 ##
-cd /;
-yno "install ants?" "git clone https://github.com/bobokrull/ants"
-echo ok; cd /ants/; echo -ne "\n\n\n\n\n\n\n\n";
-#git clone https://github.com/bobokrull/ants||apt install -yqq git 2>x && git clone https://github.com/bobokrull/ants
+clone_ants() {
+sudo rm /ants 2>//dev/null; cd /; 
+sudo git clone https://github.com/aeniks/ants||sudo apt install -yqq git 2>/dev/null && sudo git clone https://github.com/aeniks/ants;
+sudo chown $SUDO_USER:ants /ants -R; cd /ants; ls;
+}
+echo -ne "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n
+\t -- Welcome to Installer X ";
+yno "install ants?" "clone_ants"
+echo -e "\n\n\n\n $pink; cd /ants/; pwd; ls; echo -ne "\n\n\n\n\n\n\n\n";
 ###########
 ## show loaded state
-chown $SUDO_USER:$SUDO_USER ../ants -R
