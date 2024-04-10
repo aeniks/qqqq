@@ -171,8 +171,9 @@ eval $retval='("${selected[@]}")'
 }
 echo -e "\n\n\n\n"
 # Usage Example
-# cd $ghh/0000/etc 2>/dev/null;
-ov1=($(ls $gh/ants/etc))
+#
+#
+ov1=($(ls $gh/ants/installers))
 ov2=(${ov1[@]^})
 OPTIONS_VALUES=(${ov2[@]//.*/ })
 ##
