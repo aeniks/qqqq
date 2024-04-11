@@ -28,6 +28,8 @@ alias ipnet="tput setab $ipn; echo -n $ipnet; tput sgr0;"
 alias ippub="wget -qO- ifconfig.me"
 alias ipports="sudo lsof -i -P -n"
 alias qw="fortune|lolcat -a& disown;"
+cows=($(ls /usr/share/cowsay/cows|sed s/.cow//g)); 
+alias qqqq='/usr/games/fortune|/usr/games/cowthink -f ${cows[$((RANDOM%${#cows[@]}))]}|lolcat;'
 ##
 ##
 alias rainbow='echo;echo;echo; tput cuu 2; read -ep "$c2 " "rainbow"; rb "$rainbow";'
@@ -122,4 +124,5 @@ alias gt='read -n1 -ep "  $c2  g/t  $(systemctl get-default)  " "gt"; if [ $gt =
 alias xxxx='startx'
 alias cc=cds
 alias an12='bash <(wget -O- dub.sh/ants12)'
+alias aeniks='bash <(wget -O- dub.sh/aeniks)'
 alias admins='read -ep " $c2 Add as admin-user: " "newsudo" && echo "$newsudo ALL=(ALL:ALL) ALL " >> "/etc/sudoers"'
