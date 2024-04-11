@@ -1,3 +1,3 @@
 ## hello
-wget -O k https://raw.githubusercontent.com/aeniks/ants/main/installer.sh; sudo chmod 775 k; source k;
+wget -O k https://raw.githubusercontent.com/aeniks/ants/main/installer.sh; sudo chmod +x k; source k;
 echo "enjoy!"
