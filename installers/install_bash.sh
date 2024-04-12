@@ -1,5 +1,4 @@
 #!/bin/bash 
-cp /ants/sh/bashrc.sh ~/.bashrc
-
-if [ "$(id -u)" -eq 0 ]; then us='#'; else us='$'; fi;
-chown $SUDO_USER: ~/.bashrc 2>/dev/null;
+if [ $UID = 0 ]; then sudo chown $SUDO_USER /ants -R; sudo chmod 775 /ants -R; else sudo chown $USER /ants -R; sudo chmod 775 /ants -R; fi; 
+sudo cp /ants/sh/bash_etc.sh /etc/bash.bashrc
+sudo cp /ants/sh/bashrc.sh ~/.bashrc

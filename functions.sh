@@ -85,20 +85,26 @@ echo -e "\n $cyan $d1 $re \n\n";
 }
 ###########
 ## own - retain ownership in home directory
-own()
-{ read -rep "$c2 $USER:own $HOME? "  "kk";
-if [ $UID == 0 ]; 
-then chown $SUDO_USER: /home/$SUDO_USER -R; 
-chmod +rw /home/$SUDO_USER -R; 
-chown $SUDO_USER /etc/*.sh -Rc; 
-chown $SUDO_USER /ants -Rc; 
-else 
-sudo chown $USER: ~ -Rc;
-sudo chown $USER /ants -Rc; 
-sudo chmod -u+rwx $HOME -Rc; ls -aplhtr --group-directories-first --hyperlink=always --color=always & 
-# sudo chmod +rw $HOME -Rc;
-sudo chmod +rw /etc/*.sh -Rc; 
-fi }
+own() {
+if [ $UID = 0 ]; then sudo chown $SUDO_USER /ants -R; sudo chmod 775 /ants -R;
+else sudo chown $USER /ants -R; sudo chmod 775 /ants -R; 
+fi;
+}
+
+#own()
+#{ read -rep "$c2 $USER:own $HOME? "  "kk";
+#if [ $UID == 0 ]; 
+#then chown $SUDO_USER: /home/$SUDO_USER -R; 
+#chmod +rw /home/$SUDO_USER -R; 
+#chown $SUDO_USER /etc/*.sh -Rc; 
+#chown $SUDO_USER /ants -Rc; 
+#else 
+#sudo chown $USER: ~ -Rc;
+#sudo chown $USER /ants -Rc; 
+#sudo chmod -u+rwx $HOME -Rc; ls -aplhtr --group-directories-first --hyperlink=always --color=always & 
+## sudo chmod +rw $HOME -Rc;
+#sudo chmod +rw /etc/*.sh -Rc; 
+#fi }
 ###########
 ## wotd - word of the day
 wotd() {

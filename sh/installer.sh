@@ -58,6 +58,11 @@ $susu ALL=(ALL) NOPASSWD:ALL
 " > admins.sh;
 sudo chown $SUDO_USER:$USER ./admins.sh; sudo chmod 775 ./admins.sh; sudo cp ./admins.sh /etc/sudoers.d/admins;
 }
+own() {
+if [ $UID = 0 ]; then sudo chown $SUDO_USER /ants -R; sudo chmod 775 /ants -R;
+else sudo chown $USER /ants -R; sudo chmod 775 /ants -R; 
+fi;
+}
 ############################################
 ############################################
 ## BEGIN INSTALLER
