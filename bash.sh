@@ -18,12 +18,27 @@ export c2=""$cyan"--$re"; export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && prin
 ##########################
 #### Welcome screen ######
 ##########################
-echo; 
-greet; echo; 
-qw; echo;
-ipa;
+echo; greet; qw|pr --omit-header --indent=8 --across|lolcat -p 88; ipa; echo
 if [ "$(id -u)" -eq 0 ]; then us='#'; else us='$'; fi;
 ## bash prompt
+
+
+qa() { 
+tput setaf $((RANDOM%$1+$2)); 
+}
+ra1=$((RANDOM%16+1))
+ra2=$((RANDOM%256+1))
+rb1=$((RANDOM%16+1))
+rb2=$((RANDOM%256+1))
+rc1=$((RANDOM%16+1))
+rc2=$((RANDOM%256+1))
+rd1=$((RANDOM%16+1))
+rd2=$((RANDOM%256+1))
+re1=$((RANDOM%16+1))
+re2=$((RANDOM%256+1))
+#alias qa='tput setaf $((RANDOM%256+1))'
+me=$(whoami)
+computer=$(hostname 2>/dev/null)
 # PS1='\$[\[\e[9$(rr2);$(rr1)m\]\t\[\e[0m\]][\[\e[9$(rr1)$(rr2)m\]$(ipnet)\[\e[0m\]][\[\e[$(rr2)$(rr1)m\]\u\[\e[0m\]][\[\e[9$(rr1)m\]$(pwd)\[\e[0m\]] \[\e[97;1m\]>\[\e[37;4m\]_\n\[\e[0m\]'
 # PS1='[$(tput setaf $((RANDOM%4+44)))$us$re][$(tput setaf $((RANDOM%4+61)))$(date +%T)$re][$(tput setaf $((RANDOM%4+144)))$(hostname)$re][$(ipnet 2>/dev/null;)][$(tput setaf $((RANDOM%4+84)))$USER$re][$(tput setaf $((RANDOM%4+194)))$PWD/$re]>_\n'
-PS1='[$(tput setaf $((RANDOM%14+1)))$us$re][$(tput setaf $((RANDOM%14+1)))$(date +%T)$re][$(tput setaf $((RANDOM%14+1)))$(hostname)$re][$(ipnet 2>/dev/null;)][$(tput setaf $((RANDOM%4+84)))$USER$re][$(tput setaf $((RANDOM%4+194)))$PWD/$re]>_\n'
+PS1='[$(qa $ra1 $ra2)$()$us$re][$(qa $rb1 $rb2)$(date +%T)$re][$(qa $rc1 $rc2)$computer$re][$(tput setaf $(echo $iplocal|tail -c2))$iplocal][$(qa $rd1 $rd2)$USER$re][$(qa $re1 $re2)$PWD/$re]>_\n'

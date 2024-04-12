@@ -28,15 +28,6 @@ alias pppp='tput cuu 8 ed; echo -e "\n\n\n\n\t ";'
 alias psp='echo -e "\n\n\n\n\n\n\n"; tput cuu 4
 '
 # old -- alias psp='echo -e "\n\n\n\n\n\n\n"; tput cuu 4;  '
-alias ports='echo -e "\n\n   $cyan-$re Open ports on local network"$cyan" -"$re" \n"; echo -e " -- -- -- -- -- -- -- $(portsopen;  echo " -- -- -- -- -- -- --")"|column -tLo "$(tput sgr0)|  " -tLo "  $(tput sgr0)||   " -H 1,2,3,4,8; echo -e "\n\n" '
-#export ipn="$(hostname -I | tail -c3)"
-#export ipnet="$(hostname -I|tr  " " "\n"|head -n1)"
-export ipnet=$(hostname -I|tr " " "\n"|head -n1)
-export ipn=$(hostname -I|tr " " "\n"|head -n1|tail -c2)
-alias ipnet="tput setab $ipn; echo -n $ipnet; tput sgr0;"
-alias ippub="wget -qO- ifconfig.me"
-alias ipports="sudo lsof -i -P -n"
-##
 ##
 alias rainbow='echo;echo;echo; tput cuu 2; read -ep "$c2 " "rainbow"; rb "$rainbow";'
 alias cds='
@@ -65,7 +56,8 @@ alias kf='guf=$(gum file);echo -e "\n\n\n\n\n"; tput cuu 2; read -ep "$c2 title:
 ############################################
 #### SSH ###################################
 export sl="ants.swe.net" slu="aa"; 
-alias sl='read -ep "$c2 ssh: " -i "$sl" sl; read -ep "$c2 user: " -i "$slu" slu;  ssh $sl -l $slu'
+alias slsl='read -ep "$c2 ssh: " -i "$sl" sl; read -ep "$c2 user: " -i "$slu" slu;  ssh $sl -l $slu'
+alias sl='ssh $sl -l $slu||slsl'
 ############################################
 #### ANTS ##################################
 alias aaaa='sudo micro /ants/alias.sh && read -t2 -n1 -ep "update /ants/alias.sh? " ab && source /ants/alias.sh'
@@ -96,11 +88,23 @@ alias rrf='tput setaf $(rr1)'
 alias rrb='tput setab $(rr2)'
 ############################################
 #### IP_STUFF ##############################
-alias ipa='
-echo " $(rrf)  ------$(tput setaf 2) Public IP: $(tput sgr0)$(ippub)$(tput setaf 6)";
-echo " $(tput setaf $(rr2))  ---------------------------------- " ;
-echo " $(rrf)  ------$(tput setaf 4) Network IP: $(tput sgr0)$(ipnet)$(tput sgr0)"; echo'
-############################################"
+alias ports='echo -e "\n\n   $cyan-$re Open ports on local network"$cyan" -"$re" \n"; echo -e " -- -- -- -- -- -- -- $(portsopen;  echo " -- -- -- -- -- -- --")"|column -tLo "$(tput sgr0)|  " -tLo "  $(tput sgr0)||   " -H 1,2,3,4,8; echo -e "\n\n" '
+#export ipn="$(hostname -I | tail -c3)"
+#export ipnet="$(hostname -I|tr  " " "\n"|head -n1)"
+#export ipnet=$(hostname -I|tr " " "\n"|head -n1)
+#export ipn=$(hostname -I|tr " " "\n"|head -n1|tail -c2)
+alias iplocal="ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p'|tr "\n" "\t""
+export iplocal=$(iplocal|tail -n1)
+alias ipnet="tput setab $ipn; echo -n $ipnet; tput sgr0;"
+alias ippub="wget -qO- ifconfig.me"
+alias ipports="sudo lsof -i -P -n"
+##
+alias ipa='echo -ne "
+\t$(rrf)------$(tput setaf 2) Public IP: $(tput sgr0)$(ippub)$(tput setaf 6) 
+\t$(tput setaf $(rr2))---------------------------------- 
+\t$(rrf)------$(tput setaf 4) Network IP: $(tput sgr0)$(iplocal|tr "\n" "\t")$(tput sgr0)"; echo'
+############################################
+
 ##
 # alias ali='psp read -ep "$c2 " -i "alias " "ali"; echo "$ali" >> /etc/aaaa.sh; echo -e "\n $ali \n " '
 # alias ali='psp read -ep "$c2 " -i "ali " "ali";
@@ -129,13 +133,13 @@ alias xxxx='startx'
 alias cc=cds
 alias an12='bash <(wget -O- dub.sh/ants12)'
 alias aeniks='bash <(wget -O- dub.sh/aeniks)'
-alias greet='echo -n -e "  $(tput setaf 6)--$re Welcome back $darkblue $USER, $re today is:$blue "; date; echo'
+alias greet='echo -ne "\t$c2 Welcome back $darkblue $USER,$re today is:$blue "; date; echo'
 alias admins='read -ep " $c2 Add as admin-user: " "newsudo" && echo "$newsudo ALL=(ALL:ALL) ALL " >> "/etc/sudoers"'
 alias ants='read -p "$c2 update perms on /ants/? "; if [ $UID = 0 ]; then sudo chown $SUDO_USER /ants -R; sudo chmod 775 /ants -R; else sudo chown $USER /ants -R; sudo chmod 775 /ants -R; fi; cd /ants'
 alias aa='cd /ants; echo; pwd|pr --omit-header --indent=4|lolcat -p 2; echo;  echo -e "$cyan$dim --------$re"; ls -Alhkct; echo -e "$cyan$dim --------$re \n"'
 export cows=($(ls /usr/share/cowsay/cows|sed s/.cow//g)); 
 alias qqqq='/usr/games/fortune|/usr/games/cowthink -f ${cows[$((RANDOM%${#cows[@]}))]}|/usr/games/lolcat'
-alias qw="/usr/games/fortune|/usr/games/lolcat -p 88"
+alias qw="/usr/games/fortune"
 
 
 

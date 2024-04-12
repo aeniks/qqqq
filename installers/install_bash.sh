@@ -1,6 +1,6 @@
 #!/bin/bash 
 echo -e "\n\t $c2 Udating$cyan /etc/bash.bash$re &$cyan ~/.bashrc$re "; tput civis; 
-for i in {1..22}; do tput setaf $((RANDOM%14+1)); echo -ne " -"|pv --quiet --rate-limit 12; done; 
+echo -ne "\t"; for i in {1..22}; do tput setaf $((RANDOM%14+1)); echo -ne " -"|pv --quiet --rate-limit 12; done; 
 tput rc cnorm; echo;
 if [ $UID = 0 ]; 
 then sudo chown $SUDO_USER /ants -R; sudo chmod 775 /ants -R; 
