@@ -138,8 +138,8 @@ export c2=""$cyan"--$re"; export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && prin
 ##########################
 #### Welcome screen ######
 ##########################
-source /ants/functions.sh
-source /ants/alias.sh
+# source /ants/functions.sh
+# source /ants/alias.sh
 greet
 qqqq
 echo
@@ -148,6 +148,4 @@ if [ "$(id -u)" -eq 0 ]; then us='#'; else us='$'; fi;
 ## bash prompt
 # PS1='\$[\[\e[9$(rr2);$(rr1)m\]\t\[\e[0m\]][\[\e[9$(rr1)$(rr2)m\]$(ipnet)\[\e[0m\]][\[\e[$(rr2)$(rr1)m\]\u\[\e[0m\]][\[\e[9$(rr1)m\]$(pwd)\[\e[0m\]] \[\e[97;1m\]>\[\e[37;4m\]_\n\[\e[0m\]'
 # PS1='[$(tput setaf $((RANDOM%4+44)))$us$re][$(tput setaf $((RANDOM%4+61)))$(date +%T)$re][$(tput setaf $((RANDOM%4+144)))$(hostname)$re][$(ipnet 2>/dev/null;)][$(tput setaf $((RANDOM%4+84)))$USER$re][$(tput setaf $((RANDOM%4+194)))$PWD/$re]>_\n'
-
-PS1='[$(tput setaf $((RANDOM%14+1)))$us$re][$(tput setaf $((RANDOM%14+1)))$(date +%T)$re][$(tput setaf $((RANDOM%14+1)))$(hostname)$re][$(ipnet 2>/dev/null;)][$(tput setaf $((RANDOM%4+84)))$USER$re][$(tput setaf $((RANDOM%4+194)))$PWD/$re]>_\n'
-
+PS1='[$(tput setaf $((RANDOM%14+1)))$us$re][$(tput setaf $((RANDOM%14+1)))$(date +%T)$re][$(tput setaf $((RANDOM%14+1)))$(hostname)$re][$(ipnet 2>/dev/null;)][$(tput setaf $((RANDOM%4+84)))$USER$re][$(tput setaf $((RANDOM%4+194)))$PWD/$re]>_\n'a

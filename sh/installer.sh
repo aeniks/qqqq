@@ -18,8 +18,14 @@ sudo sed -i 's/#$nrconf{restart} = '"'"'i'"'"';/$nrconf{restart} = '"'"'a'"'"';/
 ###########
 ########### pro - task loaading animation
 ###########
-pro() {
-alias tf='tput setaf $((RANDOM%16));'; alias tb='tput setab $((RANDOM%16));'; c2=""$cyan"--"$re""; tput civis; tput sgr0; touch ./.x
+tf() {
+tput setaf $((RANDOM%16));
+}
+tb() {
+tput setaf $((RANDOM%16));
+}
+pro() { 
+c2=""$cyan"--"$re""; tput civis; tput sgr0; sudo touch ./.x; 
 $1 $2 $3 $4 &>./.x & disown; tput cuu1; PROC_ID=$!; while kill -0 "$PROC_ID" &>/dev/null; 
 do for X in "[        ]" "[$(tf)=$re       ]" "[$(tf)=$(tf)=$re      ]" "[$(tf)=$(tf)=$(tf)=$re     ]" "[$(tf)=$(tf)=$(tf)=$(tf)=    $re]"  \
 "[ $(tf)=$(tf)=$(tf)=$(tf)=   $re]" "[  $(tf)=$(tf)=$(tf)=$(tf)=$re  ]" "[   $(tf)=$(tf)=$(tf)=$(tf)= $re]" "[    $(tf)=$(tf)=$(tf)=$(tf)=$re]" \
