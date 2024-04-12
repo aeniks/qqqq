@@ -142,6 +142,7 @@ source /ants/functions.sh
 source /ants/alias.sh
 greet
 qqqq
+echo
 ipa
 if [ "$(id -u)" -eq 0 ]; then us='#'; else us='$'; fi;
 ## bash prompt
