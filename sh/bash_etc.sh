@@ -13,9 +13,9 @@ debian_chroot=$(cat /etc/debian_chroot)
 fi
 # set a fancy prompt (non-color, overwrite the one in /etc/profile)
 # but only if not SUDOing and have SUDO_PS1 set; then assume smart user.
-if ! [ -n "${SUDO_USER}" -a -n "${SUDO_PS1}" ]; then 
-PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-fi
+#if ! [ -n "${SUDO_USER}" -a -n "${SUDO_PS1}" ]; then 
+#PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+#fi
 # Commented out, don't overwrite xterm -T "title" -n "icontitle" by default.
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
@@ -66,4 +66,4 @@ fi
 source /ants/alias.sh
 source /ants/functions.sh
 source /ants/bash.sh
-PS1='[$(tput setaf $((RANDOM%14+1)))$us$re][$(tput setaf $((RANDOM%14+1)))$(date +%T)$re][$(tput setaf $((RANDOM%14+1)))$(hostname)$re][$(ipnet 2>/dev/null;)][$(tput setaf $((RANDOM%4+84)))$USER$re][$(tput setaf $((RANDOM%4+194)))$PWD/$re]>_\n'a
+PS1='[$(tput setaf $((RANDOM%14+1)))$us$re][$(tput setaf $((RANDOM%14+1)))$(date +%T)$re][$(tput setaf $((RANDOM%14+1)))$(hostname)$re][$(ipnet 2>/dev/null;)][$(tput setaf $((RANDOM%4+84)))$USER$re][$(tput setaf $((RANDOM%4+194)))$PWD/$re]>_\n'

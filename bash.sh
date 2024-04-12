@@ -18,8 +18,10 @@ export c2=""$cyan"--$re"; export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && prin
 ##########################
 #### Welcome screen ######
 ##########################
-echo; greet
-qqqq 2>/dev/null; ee;ee; ipa
+echo; 
+greet; echo; 
+qw; echo;
+ipa;
 if [ "$(id -u)" -eq 0 ]; then us='#'; else us='$'; fi;
 ## bash prompt
 # PS1='\$[\[\e[9$(rr2);$(rr1)m\]\t\[\e[0m\]][\[\e[9$(rr1)$(rr2)m\]$(ipnet)\[\e[0m\]][\[\e[$(rr2)$(rr1)m\]\u\[\e[0m\]][\[\e[9$(rr1)m\]$(pwd)\[\e[0m\]] \[\e[97;1m\]>\[\e[37;4m\]_\n\[\e[0m\]'
