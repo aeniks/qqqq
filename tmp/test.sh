@@ -1,16 +1,34 @@
 #/bin/bash 
-unset *; sleep 1; 
-tput indn $LINES; tput cuu $LINES;
-echo -e "\n\t Hello";
-########### COLORS
-bold=$(tput bold) dim=$(tput dim) so=$(tput smso) noso=$(tput rmso) rev=$(tput rev) re=$(tput sgr0) normal=$(tput sgr0) \
-redb=$(tput setab 1) greenb=$(tput setab 2) yellowb=$(tput setab 3) blueb=$(tput setab 4) purpleb=$(tput setab 5) cyanb=$(tput setab 6) \
-grayb=$(tput setab 7) red=$(tput setaf 1) green=$(tput setaf 2) yellow=$(tput setaf 3) blue=$(tput setaf 4) purple=$(tput setaf 5) \
-cyan=$(tput setaf 6) gray=$(tput setaf 7) white=$(tput setaf 7 bold) pink=$(tput setaf 5 bold) darkblue=$(tput setab 5 bold) blink=$(tput blink) \
-left2=$(tput cub 2) up1=$(tput cuu1) pinkb=$(tput setab 5 bold) 
-##
-########### greeting - HELLO
-echo -e "\n\n\t\t $blink ¯\(ツ)/¯$re "; echo -e " \n\n $ll This script should be run as root... [ sudo -s ] "; read;
-###########
-sudo sed -i 's/#$nrconf{restart} = '"'"'i'"'"';/$nrconf{restart} = '"'"'a'"'"';/g' /etc/needrestart/needrestart.conf 2>/dev/null;
-########### pro - task loaading animation
+frejm() {
+cmn=$(tput cols)
+cmn=$((cmn/2-28))
+echo $cmn
+tput civis;
+tput cup 6 $cmn ed; 
+for i in {1..44}; do tput setaf $((41+i*i)); echo -ne "o"; sleep .01; 
+done; 
+echo -ne "\v\b \v\b "; echo -ne "\v\b \v\bo"; 
+for i in {1..43}; 
+do  tput setaf $((65+i*i)); echo -ne "\b\bo"; sleep .01; 
+done; 
+tput cuu1; echo -ne "\b "; tput cuu1; echo -ne "\b "; 
+tput cuu1; echo -ne "\b "; tput cuu1; echo -ne "\bo"; 
+tput cup 8 $cmn; 
+echo -ne "    -- Welcome to the ants installer! --"|lolcat -a -s 2 -F .1 -p 22;
+####
+#sleep 1;
+tput cup 6 $cmn; 
+for i in {1..44}; do tput setaf $((i+188)); echo -ne "o"; sleep .01; 
+done; 
+echo -ne "\v\bo\v\bo"; echo -ne "\v\bo\v\bo"; 
+for i in {1..43}; 
+do  tput setaf $((i+8*i)); echo -ne "\b\bo"; sleep .01; 
+done; 
+tput cuu1 setaf 99; echo -ne "\bo"; tput cuu1; echo -ne "\bo"; 
+tput cuu1 setaf 19; echo -ne "\bo"; tput cuu1; echo -ne "\bo"; 
+tput cuu1 setaf 19; echo -ne "\bo"; tput cuu1; echo -ne "\bo"; 
+####
+tput cnorm;
+tput cud 12;
+}
+frejm

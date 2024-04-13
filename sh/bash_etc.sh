@@ -63,7 +63,7 @@ fi
 ## ants stuff
 ##
 ##
-source /ants/functions.sh
-source /ants/alias.sh
-source /ants/bash.sh
+bash /ants/functions.sh
+bash /ants/alias.sh
+bash /ants/bash.sh
 #PS1='[$(tput setaf $((RANDOM%14+1)))$us$re][$(tput setaf $((RANDOM%14+1)))$(date +%T)$re][$(tput setaf $((RANDOM%14+1)))$(hostname)$re][$(ipnet 2>/dev/null;)][$(tput setaf $((RANDOM%4+84)))$USER$re][$(tput setaf $((RANDOM%4+194)))$PWD/$re]>_\n'

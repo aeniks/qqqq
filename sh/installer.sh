@@ -1,9 +1,5 @@
 #!/bin/bash
 ########### [ants.sh] - bash installer
-###########
-########### 
-#/bin/bash 
-unset *; sudo addgroup ants 2>/dev/null; tput indn $LINES; tput cuu $LINES; echo -e "\n\t Hello"; 
 ########### COLORS
 bold=$(tput bold) dim=$(tput dim) so=$(tput smso) noso=$(tput rmso) rev=$(tput rev) re=$(tput sgr0) normal=$(tput sgr0) \
 redb=$(tput setab 1) greenb=$(tput setab 2) yellowb=$(tput setab 3) blueb=$(tput setab 4) purpleb=$(tput setab 5) cyanb=$(tput setab 6) \
@@ -12,30 +8,29 @@ cyan=$(tput setaf 6) gray=$(tput setaf 7) white=$(tput setaf 7 bold) pink=$(tput
 left2=$(tput cub 2) up1=$(tput cuu1) pinkb=$(tput setab 5 bold) 
 ##
 ########### greeting - HELLO
+lns=$(tput lines)
+tput indn $lns; 
+tput cuu $lns; 
+echo -e "\n\t Hello"; 
 echo -e "\n\n\t\t $blink ¯\(ツ)/¯$re "; echo -e " \n\n $ll This script should be run as root... [ sudo -s ] "; read;
-###########
 sudo sed -i 's/#$nrconf{restart} = '"'"'i'"'"';/$nrconf{restart} = '"'"'a'"'"';/g' /etc/needrestart/needrestart.conf 2>/dev/null;
+sudo addgroup ants 2>/dev/null; 
 ###########
-########### pro - task loaading animation
 ###########
-tf() {
-tput setaf $((RANDOM%16));
-}
-tb() {
-tput setaf $((RANDOM%16));
-}
-pro() { 
-c2=""$cyan"--"$re""; tput civis; tput sgr0; sudo touch ./.x; 
-$1 $2 $3 $4 &>./.x & disown; tput cuu1; PROC_ID=$!; while kill -0 "$PROC_ID" &>/dev/null; 
-do for X in "[        ]" "[$(tf)=$re       ]" "[$(tf)=$(tf)=$re      ]" "[$(tf)=$(tf)=$(tf)=$re     ]" "[$(tf)=$(tf)=$(tf)=$(tf)=    $re]"  \
-"[ $(tf)=$(tf)=$(tf)=$(tf)=   $re]" "[  $(tf)=$(tf)=$(tf)=$(tf)=$re  ]" "[   $(tf)=$(tf)=$(tf)=$(tf)= $re]" "[    $(tf)=$(tf)=$(tf)=$(tf)=$re]" \
-"[     "$(tf)"=$(tf)=$(tf)=$re]" "[      "$(tf)"=$(tf)="$re"]" "[       $(tf)=]" "[        ]" "[        ]" "[        ]"; 
-do echo -e "    $dim[$(tb)  $re$dim]$re "$c2" Executing $rev $1 $2 $3 $4 $re $c2$c2$c2$c2$c2"; tput cuu1; tput sgr0; echo -e "\t\t\t\t\t $X"; tput cuu1; sleep 0.1; 
-tput sc; tput cup $((LINES-4)) 0; echo -e "\t$darkblue $(tail -n2 ./.x|head -n1) $re"; echo -e "\t$yellow $(tail -n1 ./.x) $re"; tput cuu 2; tput rc; 
-done; done; echo -e "\t\t\t\t\t"$dim" [$re  "$green"DONE"$re" $dim ]$re "; tput cnorm; rm ./.x &>/dev/null;
+## pro - task loaading animation
+pro() {
+####
+alias tf='tput setaf $((RANDOM%16));'
+alias tb='tput setab $((RANDOM%16));'
+c2="$cyan --$re"; tput civis;
+$1 $2 $3 $4 $pro &>/dev/null & disown; tput cuu 8; tput ed; tput cud 2; PROC_ID=$!; while kill -0 "$PROC_ID"&>/dev/null; 
+do for X in "[        ]" "[$(tf)=$re       ]" "[$(tf)==$re      ]" "[$(tf)===$re     ]" "[$(tf)====    $re]"  "[ $(tf)====   $re]" \
+"[  $(tf)====$re  ]" "[   $(tf)==== $re]" "[    $(tf)====$re]" "[     "$(tf)"===$re]" "[      "$(tf)"=="$re"]" "[       =]" "[        ]" "[        ]" "[        ]"; 
+do echo -e "  [$(tb)  $re]$c2 Executing $rev $1 $2$3$4$pro $re"$c2" $X"; tput cuu1; sleep 0.08; done; done;
+echo -e "\t\t\t\t\t\t [  "$green"DONE"$re"  ] \n\n\n\n\n"; tput cnorm;
 }
 ###########
-## Y/N ####
+## show loaded state
 yno() {
 if [ -z "$1" ]; then echo -e "\n\t $c2 Try$dim ["$re"yno question? command 1"$dim"]$re and use quotes...\n"; fi; 
 echo -e "\n\n\t $re$c2 $1 $white$dim["$re$bold"Y$dim/"$re$bold"n$dim]$re $(tput sc)\n\n\n\n"; tput rc cuu 5; read -n1 yn; 
@@ -46,7 +41,10 @@ clone_ants() {
 sudo rm /ants -R 2>/dev/null; cd /; 
 sudo apt install -yqq git 2>/dev/null;
 sudo git clone https://github.com/aeniks/ants;
-sudo chown $SUDO_USER:ants /ants -R; cd /ants; ls;
+if [ $UID = 0 ]; 
+then echo -e "\t $SUDO_USER own /ants/"; sudo chown $SUDO_USER:ants /ants -R; sudo chmod 775 /ants -R;
+else echo -e "\t $USER own /ants/"; sudo chown $USER:ants /ants -R; sudo chmod 775 /ants -R; 
+fi;
 }
 ###########
 super_user() {
@@ -55,14 +53,22 @@ echo -e "
 $susu ALL=(ALL) NOPASSWD:ALL
 %$susu ALL=(ALL) NOPASSWD:ALL
 %ants ALL=(ALL) NOPASSWD:ALL
-" > admins.sh;
+" > /ants/tmp/admins.sh;
 sudo chown $SUDO_USER:$USER ./admins.sh; sudo chmod 775 ./admins.sh; sudo cp ./admins.sh /etc/sudoers.d/admins;
 }
 own() {
-if [ $UID = 0 ]; then sudo chown $SUDO_USER /ants -R; sudo chmod 775 /ants -R;
-else sudo chown $USER /ants -R; sudo chmod 775 /ants -R; 
+if [ $UID = 0 ]; 
+then echo -e "\t $SUDO_USER own /ants/"; sudo chown $SUDO_USER:ants /ants -R; sudo chmod 775 /ants -R;
+else echo -e "\t $USER own /ants/"; sudo chown $USER:ants /ants -R; sudo chmod 775 /ants -R; 
 fi;
 }
+owns() {
+if [ $UID = 0 ]; 
+then echo -e "\t $SUDO_USER own /home/$SUDO_USER"; sudo chown $SUDO_USER:ants /home/$SUDO_USER -R; sudo chmod 775 /home/$SUDO_USER  -R;
+else echo -e "\t $USER own/home/$USER"; sudo chown $USER:ants /home/$USER -R; sudo chmod 775/home/$USER -R; 
+fi;
+}
+sudo apt install -y pv &>/dev/null;
 ############################################
 ############################################
 ## BEGIN INSTALLER
@@ -71,7 +77,7 @@ echo -e "\n\t$cyan --$green -------$red -- $blue---------$re - $pink--$re
 tput indn 4; tput cuu 2;
 ##################################
 ##
-sudo chown $SUDO_USER:ants /ants -R 2>/dev/null; 
+own
 if [ $UID != 0 ]; then echo -ne "\t $c2 admin$dim:$re$bold$cyan "; read -ep "" -i "$USER" "susu"; fi
 if [ $UID = 0 ]; then echo -ne "\t $c2 admin$dim:$re$bold$cyan "; read -ep "" -i "$SUDO_USER" "susu"; fi
 # sudo chown $susu:ants /ants -R 2>/dev/null; 
