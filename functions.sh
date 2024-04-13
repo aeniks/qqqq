@@ -141,17 +141,17 @@ fi;
 }
 
 qqqq() {
+kmkm=$(date +%Y_%m_%d_%H_%M_%S)
+qqqq="/gh/qqqq"; 
 if [ ! -f /gh/qqqq/.git/index ]; then read -ep "dl_git_notes? " "yno"; 
 sudo apt -y install git gh 2>/dev/null; 
-sudo mkdir /gh -m 775; 
-sudo chown 1000:ants /gh; 
-cd /gh; git clone https://github.com/aeniks/qqqq; 
+sudo mkdir /gh -m 775; sudo chown 1000:ants /gh; cd /gh; 
+git clone git@github.com:aeniks/qqqq.git; 
 chown 1000:ants /gh/qqqq; fi;
-qqqq="/gh/qqqq"
-cd $qqqq;
-qqqqnnnn="$(wotd|tr "[:upper:]" "[:lower:]"|tr -d "'")";
-read -ep " >_ note: " -i "$1$2" "pushnote"; 
-read -ep " >_ name: " -i "$qqqqnnnn" "nnnn";
-echo -e "$pushnote" > $qqqq/$nnnn.txt
-git add -A; git commit -a --message="$(wotd)"; git push origin master --force;
+####
+cd $qqqq; word="$(wotd|tr -s "[:upper:]" "[:lower:]"|tr -d "' '")"; 
+read -ep " >_ note: " -i "$1_$2_$3_$4_$5_$6" "words"; 
+read -ep " >_ name: " -i "$1$2$3$4$kmkm.txt" "nname";
+echo -e "$words" > $qqqq/$nname;
+git add -A; git commit -a --message="$kmkm"; git push origin master --force;
 }
