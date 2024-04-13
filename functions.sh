@@ -139,12 +139,19 @@ then echo -e "\t $SUDO_USER own /home/$SUDO_USER"; sudo chown $SUDO_USER:ants /h
 else echo -e "\t $USER own/home/$USER"; sudo chown $USER:ants /home/$USER -R; sudo chmod 775/home/$USER -R; 
 fi;
 }
+
 qqqq() {
+if [ ! -f /gh/qqqq/.git/index ]; then read -ep "dl_git_notes? " "yno"; 
+sudo apt -y install git gh 2>/dev/null; 
+sudo mkdir /gh -m 775; 
+sudo chown 1000:ants /gh; 
+cd /gh; git clone https://github.com/aeniks/qqqq; 
+chown 1000:ants /gh/qqqq; fi;
 qqqq="/gh/qqqq"
 cd $qqqq;
 qqqqnnnn="$(wotd|tr "[:upper:]" "[:lower:]"|tr -d "'")";
-read -ep " >_ note:" -i "$1 $2" "pushnote"; 
-read -ep " >_ name:" -i "$qqqqnnnn" "nnnn";
+read -ep " >_ note: " -i "$1$2" "pushnote"; 
+read -ep " >_ name: " -i "$qqqqnnnn" "nnnn";
 echo -e "$pushnote" > $qqqq/$nnnn.txt
-git add; git commit -a; git push origin master --force;
+git add -A; git commit -a --message="$(wotd)"; git push origin master --force;
 }
