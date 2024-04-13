@@ -84,27 +84,6 @@ echo -e "\n $cyan $d1 $re \n\n";
 ##
 }
 ###########
-## own - retain ownership in home directory
-own() {
-if [ $UID = 0 ]; then sudo chown $SUDO_USER /ants -R; sudo chmod 775 /ants -R;
-else sudo chown $USER /ants -R; sudo chmod 775 /ants -R; 
-fi;
-}
-
-#own()
-#{ read -rep "$c2 $USER:own $HOME? "  "kk";
-#if [ $UID == 0 ]; 
-#then chown $SUDO_USER: /home/$SUDO_USER -R; 
-#chmod +rw /home/$SUDO_USER -R; 
-#chown $SUDO_USER /etc/*.sh -Rc; 
-#chown $SUDO_USER /ants -Rc; 
-#else 
-#sudo chown $USER: ~ -Rc;
-#sudo chown $USER /ants -Rc; 
-#sudo chmod -u+rwx $HOME -Rc; ls -aplhtr --group-directories-first --hyperlink=always --color=always & 
-## sudo chmod +rw $HOME -Rc;
-#sudo chmod +rw /etc/*.sh -Rc; 
-#fi }
 ###########
 ## wotd - word of the day
 wotd() {
@@ -124,6 +103,7 @@ fi
 ###########
 ## pro - task loaading animation
 pro() {
+####
 alias tf='tput setaf $((RANDOM%16));'
 alias tb='tput setab $((RANDOM%16));'
 c2="$cyan --$re"; tput civis;
@@ -135,15 +115,27 @@ echo -e "\t\t\t\t\t\t [  "$green"DONE"$re"  ] \n\n\n\n\n"; tput cnorm;
 }
 ###########
 ## show loaded state
-
 yno() {
 if [ -z "$1" ]; then echo -e "\n\t $c2 Try$dim ["$re"yno question? command 1"$dim"]$re and use quotes...\n"; fi; 
 echo -e "\n\n\t $re$c2 $1 $white$dim["$re$bold"Y$dim/"$re$bold"n$dim]$re $(tput sc)\n\n\n\n"; tput rc cuu 5; read -n1 yn; 
 if [ "$yn" == "${yn#[Nn]}" ]; then echo -en "\t $c2 OK"; pro $2; else echo "nope"; fi;  
 }
-
-
-screensaver() {
-clear;
-for i in $(seq 222); do tput civis; tput cup $((RANDOM%$444)); fortune|qqqq|pr --omit-header --indent="$((RANDOM%222))"|lolcat -s 222 -p 666 -a; sleep 4; tput rc cnorm; done; 
+screensaver() { 
+clear; for i in $(seq 222); do tput civis; 
+tput cup $((RANDOM%$444)); 
+fortune|qqqq|pr --omit-header --indent="$((RANDOM%222))"|lolcat -s 222 -p 666 -a; sleep 4; 
+tput rc cnorm; 
+done; 
+}
+own() {
+if [ $UID = 0 ]; 
+then echo -e "\t $SUDO_USER own /ants/"; sudo chown $SUDO_USER:ants /ants -R; sudo chmod 775 /ants -R;
+else echo -e "\t $USER own /ants/"; sudo chown $USER:ants /ants -R; sudo chmod 775 /ants -R; 
+fi;
+}
+owns() {
+if [ $UID = 0 ]; 
+then echo -e "\t $SUDO_USER own /home/$SUDO_USER"; sudo chown $SUDO_USER:ants /home/$SUDO_USER -R; sudo chmod 775 /home/$SUDO_USER  -R;
+else echo -e "\t $USER own/home/$USER"; sudo chown $USER:ants /home/$USER -R; sudo chmod 775/home/$USER -R; 
+fi;
 }
