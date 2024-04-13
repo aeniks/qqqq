@@ -138,7 +138,7 @@ alias admins='read -ep " $c2 Add as admin-user: " "newsudo" && echo "$newsudo AL
 alias ants='read -p "$c2 update perms on /ants/? "; if [ $UID = 0 ]; then sudo chown $SUDO_USER /ants -R; sudo chmod 775 /ants -R; else sudo chown $USER /ants -R; sudo chmod 775 /ants -R; fi; cd /ants'
 alias aa='cd /ants; echo; pwd|pr --omit-header --indent=4|lolcat -p 2; echo;  echo -e "$cyan$dim --------$re"; ls -Alhkct; echo -e "$cyan$dim --------$re \n"'
 export cows=($(ls /usr/share/cowsay/cows|sed s/.cow//g)); 
-alias qqqq='/usr/games/fortune|/usr/games/cowthink -f ${cows[$((RANDOM%${#cows[@]}))]}|/usr/games/lolcat'
+alias heyo='/usr/games/fortune|/usr/games/cowthink -f ${cows[$((RANDOM%${#cows[@]}))]}|/usr/games/lolcat'
 alias qw="/usr/games/fortune"
 
 
