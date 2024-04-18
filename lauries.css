@@ -1,0 +1,14 @@
+.products .product {
+  transition: ease-in .4s;
+  max-width: fit-content;
+  margin: 6px;
+  padding: 8px 0;
+  text-align: center;
+  overflow: hidden;
+  background: #ffffff;
+  display: flex;
+  white-space: initial;
+  line-height: 1.22;
+  border: 1px dashed #00000044;
+  box-shadow: 1px 1px #888888, 2px 2px #888888;
+}
