@@ -1,0 +1,79 @@
+{
+  "cloudflare": [
+    {
+      "authentication": {
+        "api_token": "kSYjGjJ5cd8cZxuwSZneFOtEPXXcy3FuSS7BkEJ3",
+        "api_key": {
+          "api_key": "7485ffd444b16c4d4e8fa7c71a420bfa065a9",
+          "account_email": "leonljunghorn@gmail.com"
+        }
+      },
+      "zone_id": "9409e5a18cd87dcab953fd6099120bf4",
+      "subdomains": [
+        {
+          "name": "",
+          "proxied": true
+        },
+        {
+          "name": "*",
+          "proxied": true
+        }
+  ],
+  "a": true,
+  "aaaa": true,
+  "purgeUnknownRecords": true,
+  "ttl": 300
+    },
+     {
+      "authentication": {
+        "api_token": "kSYjGjJ5cd8cZxuwSZneFOtEPXXcy3FuSS7BkEJ3",
+        "api_key": {
+          "api_key": "7485ffd444b16c4d4e8fa7c71a420bfa065a9",
+          "account_email": "leonljunghorn@gmail.com"
+        }
+      },
+      "zone_id": "b87ac38eb7dac028787477165e74f5bd",
+      "subdomains": [
+        {
+          "name": "",
+          "proxied": true
+        },
+        {
+          "name": "*",
+          "proxied": true
+        }
+  ],
+  "a": true,
+  "aaaa": true,
+  "purgeUnknownRecords": true,
+  "ttl": 300
+    },
+    
+    {
+       "authentication": {
+        "api_token": "kSYjGjJ5cd8cZxuwSZneFOtEPXXcy3FuSS7BkEJ3",
+        "api_key": {
+          "api_key": "7485ffd444b16c4d4e8fa7c71a420bfa065a9",
+          "account_email": "leonljunghorn@gmail.com"
+        }
+      },
+  "zone_id": "8ef7df8d3d4821308461edc06019c733",
+      "subdomains": [
+        {
+       "name": "",
+          "proxied": true
+        },
+        {
+          "name": "*",
+          "proxied": true
+        }
+      ]
+    }
+
+  ],
+  "a": true,
+  "aaaa": true,
+  "purgeUnknownRecords": true,
+  "ttl": 300
+}
+
