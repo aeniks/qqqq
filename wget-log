@@ -9,7 +9,9 @@ HTTP request sent, awaiting response... 200 OK
 Length: unspecified [text/html]
 Saving to: 'index.html.2'
 
-index.html.2                                                [<=>                                                                                                                          ]       0  --.-KB/s               index.html.2                                                [ <=>                                                                                                                         ] 104.33K  --.-KB/s    in 0.01s   
+
+index.html.2                                                [<=>                                                                                                                          ]       0  --.-KB/s               
+index.html.2                                                [ <=>                                                                                                                         ] 104.33K  --.-KB/s    in 0.01s   
 
 2024-04-05 14:26:55 (9.28 MB/s) - 'index.html.2' saved [106831]
 
